@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import NextImage from '@/components/NextImage';
-import Typography from '@/components/Typography';
+import Link from "next/link";
+import NextImage from "@/components/NextImage";
+import Typography from "@/components/Typography";
 
 const LandingPage = () => {
   return (

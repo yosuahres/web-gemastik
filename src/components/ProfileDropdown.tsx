@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useRef, useEffect } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
-import { User } from '@supabase/supabase-js';
+import { useState, useRef, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import { User } from "@supabase/supabase-js";
 
 const ProfileDropdown = ({ user }: { user: User }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,19 +15,22 @@ const ProfileDropdown = ({ user }: { user: User }) => {
     await supabase.auth.signOut();
     setIsOpen(false);
     router.refresh();
-    router.push('/login');
+    router.push("/login");
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -42,9 +45,7 @@ const ProfileDropdown = ({ user }: { user: User }) => {
       </button>
       {isOpen && (
         <div className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-xl z-20">
-          <div className="px-4 py-2 text-sm text-gray-700">
-            {user.email}
-          </div>
+          <div className="px-4 py-2 text-sm text-gray-700">{user.email}</div>
           <button
             onClick={handleLogout}
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"

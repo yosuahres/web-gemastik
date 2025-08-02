@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const router = useRouter();
@@ -29,10 +29,10 @@ const RegisterPage = () => {
       setError(error.message);
     } else {
       setSuccess(
-        'Registration successful! Please check your email to confirm your account.'
+        "Registration successful! Please check your email to confirm your account.",
       );
       setTimeout(() => {
-        router.push('/login');
+        router.push("/login");
       }, 5000);
     }
   };

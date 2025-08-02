@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { User } from '@supabase/supabase-js';
-import ProfileDropdown from '@/components/ProfileDropdown';
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { User } from "@supabase/supabase-js";
+import ProfileDropdown from "@/components/ProfileDropdown";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -15,19 +15,19 @@ const Navbar = () => {
       const { data } = await supabase.auth.getUser();
       setUser(data.user);
     };
-    
+
     getUser();
 
     // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (event === 'SIGNED_IN' && session) {
-          setUser(session.user);
-        } else if (event === 'SIGNED_OUT') {
-          setUser(null);
-        }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_IN" && session) {
+        setUser(session.user);
+      } else if (event === "SIGNED_OUT") {
+        setUser(null);
       }
-    );
+    });
 
     return () => subscription.unsubscribe();
   }, [supabase.auth]);
@@ -35,7 +35,10 @@ const Navbar = () => {
   return (
     <nav className="bg-transparent text-white p-4 absolute top-0 left-0 w-full">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="flex items-center space-x-2 text-2xl font-bold">
+        <Link
+          href="/"
+          className="flex items-center space-x-2 text-2xl font-bold"
+        >
           <svg
             className="w-8 h-8 text-red-500"
             fill="none"

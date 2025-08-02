@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import Message from './Message';
+import React, { useState, useRef, useEffect } from "react";
+import Message from "./Message";
 
-export type AnxietyLevel = 'LOW' | 'MEDIUM' | 'HIGH';
+export type AnxietyLevel = "LOW" | "MEDIUM" | "HIGH";
 
 interface ChatMessage {
   text: string;
-  sender: 'user' | 'bot';
+  sender: "user" | "bot";
 }
 
 interface ChatbotProps {
@@ -15,8 +15,10 @@ interface ChatbotProps {
 }
 
 const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([{ text: 'Hello! How are you feeling today?', sender: 'bot' }]);
-  const [userInput, setUserInput] = useState('');
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { text: "Hello! How are you feeling today?", sender: "bot" },
+  ]);
+  const [userInput, setUserInput] = useState("");
   const chatboxRef = useRef<HTMLDivElement>(null);
   const isInitialMount = useRef(true);
 
@@ -30,32 +32,41 @@ const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel }) => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
-      setMessages((prevMessages) => [...prevMessages, { text: `Anxiety level set to: ${anxietyLevel}`, sender: 'bot' }]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: `Anxiety level set to: ${anxietyLevel}`, sender: "bot" },
+      ]);
     }
   }, [anxietyLevel]);
 
   const handleSendMessage = () => {
-    if (userInput.trim() === '') return;
+    if (userInput.trim() === "") return;
 
     // Add user message to chat
-    setMessages([...messages, { text: userInput, sender: 'user' }]);
-    setUserInput('');
+    setMessages([...messages, { text: userInput, sender: "user" }]);
+    setUserInput("");
 
     // Get bot response from Gemini API
     const getResponse = async () => {
-      const response = await fetch('/api/gemini', {
-        method: 'POST',
+      const response = await fetch("/api/gemini", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ message: userInput, anxietyLevel }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        setMessages((prevMessages) => [...prevMessages, { text: data.text, sender: 'bot' }]);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: data.text, sender: "bot" },
+        ]);
       } else {
-        setMessages((prevMessages) => [...prevMessages, { text: 'Sorry, something went wrong.', sender: 'bot' }]);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Sorry, something went wrong.", sender: "bot" },
+        ]);
       }
     };
     getResponse();
@@ -63,7 +74,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel }) => {
 
   return (
     <div className="flex flex-col h-full max-w-5xl mx-auto">
-      <div ref={chatboxRef} className="flex-1 p-4 overflow-y-auto flex flex-col w-full no-scrollbar">
+      <div
+        ref={chatboxRef}
+        className="flex-1 p-4 overflow-y-auto flex flex-col w-full no-scrollbar"
+      >
         {messages.map((msg, index) => (
           <Message key={index} message={msg} />
         ))}
@@ -74,7 +88,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel }) => {
             type="text"
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
             placeholder="Your Message..."
             className="w-full p-4 pr-16 rounded-full bg-white text-black"
           />

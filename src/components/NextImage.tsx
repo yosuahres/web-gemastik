@@ -1,4 +1,4 @@
-import Image, { ImageProps } from 'next/image';
+import Image, { ImageProps } from "next/image";
 
 const NextImage = ({ src, alt, className, ...props }: ImageProps) => {
   return (
@@ -6,7 +6,7 @@ const NextImage = ({ src, alt, className, ...props }: ImageProps) => {
       src={src}
       alt={alt}
       fill
-      style={{ objectFit: 'cover' }}
+      style={{ objectFit: "cover" }}
       className={className}
       {...props}
     />

@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
-import { User } from '@supabase/supabase-js';
-import Chatbot, { AnxietyLevel } from '../chatbot/Chatbot';
+import { useEffect, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import { User } from "@supabase/supabase-js";
+import Chatbot, { AnxietyLevel } from "../chatbot/Chatbot";
 
 const DashboardPage = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [anxietyLevel, setAnxietyLevel] = useState<AnxietyLevel>('LOW');
+  const [anxietyLevel, _setAnxietyLevel] = useState<AnxietyLevel>("LOW");
   const router = useRouter();
   const supabase = createClient();
 
@@ -18,12 +18,11 @@ const DashboardPage = () => {
       if (data.user) {
         setUser(data.user);
       } else {
-        router.push('/login');
+        router.push("/login");
       }
     };
     getUser();
   }, [router, supabase.auth]);
-
 
   if (!user) {
     return <div>Loading...</div>;
