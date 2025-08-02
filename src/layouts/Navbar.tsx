@@ -15,7 +15,21 @@ const Navbar = () => {
       const { data } = await supabase.auth.getUser();
       setUser(data.user);
     };
+    
     getUser();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+          setUser(session.user);
+        } else if (event === 'SIGNED_OUT') {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
   }, [supabase.auth]);
 
   return (

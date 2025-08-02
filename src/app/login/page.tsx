@@ -21,6 +21,7 @@ const LoginPage = () => {
     if (error) {
       setError(error.message);
     } else {
+      router.refresh();
       router.push('/dashboard');
     }
   };

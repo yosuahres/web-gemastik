@@ -14,6 +14,7 @@ const ProfileDropdown = ({ user }: { user: User }) => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setIsOpen(false);
+    router.refresh();
     router.push('/login');
   };
 
