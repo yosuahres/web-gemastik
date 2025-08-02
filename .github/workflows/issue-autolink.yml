@@ -1,0 +1,13 @@
+name: Issue Autolink
+on:
+  pull_request:
+    types: [opened, edited]
+jobs:
+  autolink:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Autolink issues
+        uses: tendee/issue-autolink-action@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-pattern: 'Closes #(\\d+)'
