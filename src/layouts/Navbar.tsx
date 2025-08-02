@@ -1,11 +1,27 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { User } from '@supabase/supabase-js';
+import ProfileDropdown from '@/components/ProfileDropdown';
 
 const Navbar = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setUser(data.user);
+    };
+    getUser();
+  }, [supabase.auth]);
+
   return (
     <nav className="bg-transparent text-white p-4 absolute top-0 left-0 w-full">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center space-x-2 text-2xl font-bold">
-          {/* Placeholder for logo */}
           <svg
             className="w-8 h-8 text-red-500"
             fill="none"
@@ -23,6 +39,7 @@ const Navbar = () => {
           <span>anxiety</span>
         </Link>
         <div className="hidden md:flex space-x-4">
+          {user && <ProfileDropdown user={user} />}
         </div>
         <div className="md:hidden">
           {/* Mobile Menu Button */}
