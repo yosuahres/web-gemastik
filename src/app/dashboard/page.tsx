@@ -30,24 +30,9 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
-      <div className="w-full max-w-4xl space-y-4">
-        {/* <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Welcome, {user.email}</h2>
-        </div> */}
-
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold">Simulasi Level Anxiety</h3>
-          <div className="flex space-x-2">
-            <button onClick={() => setAnxietyLevel('LOW')} className="px-4 py-2 bg-green-500 rounded-md">Set Low</button>
-            <button onClick={() => setAnxietyLevel('MEDIUM')} className="px-4 py-2 bg-yellow-500 rounded-md">Set Medium</button>
-            <button onClick={() => setAnxietyLevel('HIGH')} className="px-4 py-2 bg-red-500 rounded-md">Set High</button>
-          </div>
-        </div>
-
-        <div className="h-[60vh] bg-gray-800 rounded-lg">
-          <Chatbot anxietyLevel={anxietyLevel} />
-        </div>
+    <div className="flex flex-col h-screen">
+      <div className="pt-16 flex-1 overflow-y-auto">
+        <Chatbot anxietyLevel={anxietyLevel} />
       </div>
     </div>
   );

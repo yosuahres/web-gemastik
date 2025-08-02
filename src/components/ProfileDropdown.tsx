@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
@@ -9,14 +9,29 @@ const ProfileDropdown = ({ user }: { user: User }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const supabase = createClient();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+    setIsOpen(false);
     router.push('/login');
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
         <img
           src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"

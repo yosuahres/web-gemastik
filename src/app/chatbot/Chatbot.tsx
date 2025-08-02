@@ -62,23 +62,42 @@ const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}>
-      <div ref={chatboxRef} style={{ flex: 1, padding: '1rem', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+    <div className="flex flex-col h-full max-w-2xl mx-auto">
+      <div ref={chatboxRef} className="flex-1 p-4 overflow-y-auto flex flex-col w-full no-scrollbar">
         {messages.map((msg, index) => (
           <Message key={index} message={msg} />
         ))}
       </div>
-      <div style={{ padding: '1rem', borderTop: '1px solid #ccc' }}>
-        <input
-          type="text"
-          value={userInput}
-          onChange={(e) => setUserInput(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-          style={{ width: 'calc(100% - 70px)', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-        <button onClick={handleSendMessage} style={{ width: '60px', padding: '0.5rem', marginLeft: '10px', borderRadius: '4px', border: 'none', background: '#007bff', color: 'white' }}>
-          Send
-        </button>
+      <div className="p-4 flex justify-center">
+        <div className="relative w-full">
+          <input
+            type="text"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            placeholder="Your Message..."
+            className="w-full p-4 pr-16 rounded-full bg-white text-black"
+          />
+          <button
+            onClick={handleSendMessage}
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-orange-400 text-white rounded-full flex items-center justify-center"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 10l7-7m0 0l7 7m-7-7v18"
+              ></path>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -10,25 +10,13 @@ interface MessageProps {
 const Message: React.FC<MessageProps> = ({ message }) => {
   const isUser = message.sender === 'user';
 
-  const messageStyle: React.CSSProperties = {
-    maxWidth: '70%',
-    padding: '0.5rem 1rem',
-    borderRadius: '1rem',
-    marginBottom: '0.5rem',
-    alignSelf: isUser ? 'flex-end' : 'flex-start',
-    background: isUser ? '#007bff' : '#e9e9eb',
-    color: isUser ? 'white' : 'black',
-  };
-
-  const containerStyle: React.CSSProperties = {
-    display: 'flex',
-    justifyContent: isUser ? 'flex-end' : 'flex-start',
-    width: '100%',
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={messageStyle}>
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} w-full`}>
+      <div
+        className={`max-w-[80%] p-4 rounded-xl mb-4 ${
+          isUser ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'
+        }`}
+      >
         {message.text}
       </div>
     </div>
