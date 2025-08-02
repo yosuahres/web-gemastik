@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
-import Chatbot from '../chatbot/Chatbot';
-import { AnxietyLevel } from '@/lib/chatbotLogic';
+import Chatbot, { AnxietyLevel } from '../chatbot/Chatbot';
 
 const DashboardPage = () => {
   const [user, setUser] = useState<User | null>(null);
