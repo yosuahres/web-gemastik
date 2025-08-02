@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "pnpm biome lint ./src",
-    "format": "pnpm biome format --write ./src"
+    "format": "pnpm biome format --write ./src",
+    "check": "pnpm biome check --apply ./src",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
