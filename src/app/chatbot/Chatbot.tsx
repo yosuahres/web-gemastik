@@ -12,10 +12,9 @@ interface ChatMessage {
 
 interface ChatbotProps {
   anxietyLevel: AnxietyLevel;
-  onNewChat: () => void;
 }
 
-const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel, onNewChat }) => {
+const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([{ text: 'Hello! How are you feeling today?', sender: 'bot' }]);
   const [userInput, setUserInput] = useState('');
   const chatboxRef = useRef<HTMLDivElement>(null);
@@ -34,10 +33,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel, onNewChat }) => {
       setMessages((prevMessages) => [...prevMessages, { text: `Anxiety level set to: ${anxietyLevel}`, sender: 'bot' }]);
     }
   }, [anxietyLevel]);
-
-  const handleNewChat = () => {
-    setMessages([{ text: 'Hello! How are you feeling today?', sender: 'bot' }]);
-  };
 
   const handleSendMessage = () => {
     if (userInput.trim() === '') return;
@@ -67,7 +62,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel, onNewChat }) => {
   };
 
   return (
-    <div className="flex flex-col h-full max-w-5xl mx-auto">
+    <div className="flex flex-col h-full max-w-2xl mx-auto">
       <div ref={chatboxRef} className="flex-1 p-4 overflow-y-auto flex flex-col w-full no-scrollbar">
         {messages.map((msg, index) => (
           <Message key={index} message={msg} />

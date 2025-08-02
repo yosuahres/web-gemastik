@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-import Layout from '@/layouts/Layout';
+import Navbar from "@/layouts/Navbar";
+import Footer from "@/layouts/Footer";
 
 const geistSans = GeistSans;
 const geistMono = GeistMono;
@@ -22,7 +23,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Layout>{children}</Layout>
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
