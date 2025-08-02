@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "pnpm biome lint ./src",
     "format": "pnpm biome format --write ./src",
-    "check": "pnpm biome check --apply ./src",
+    "check": "pnpm format && pnpm lint",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
