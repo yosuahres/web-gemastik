@@ -1,31 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
-import { User } from "@supabase/supabase-js";
+import { useState } from "react";
 import Chatbot, { AnxietyLevel } from "../chatbot/Chatbot";
+import { useAuth } from "@/contexts/AuthContext";
 
 const DashboardPage = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const { user, loading } = useAuth();
   const [anxietyLevel, _setAnxietyLevel] = useState<AnxietyLevel>("LOW");
-  const router = useRouter();
-  const supabase = createClient();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data.user) {
-        setUser(data.user);
-      } else {
-        router.push("/login");
-      }
-    };
-    getUser();
-  }, [router, supabase.auth]);
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
 
   if (!user) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div>Please log in to access the dashboard.</div>
+      </div>
+    );
   }
 
   return (

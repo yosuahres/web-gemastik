@@ -1,21 +1,20 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
+import { useAuth } from "@/contexts/AuthContext";
 
 const ProfileDropdown = ({ user }: { user: User }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
+  const { signOut } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await signOut();
     setIsOpen(false);
-    router.refresh();
-    router.push("/login");
+    router.push("/");
   };
 
   useEffect(() => {

@@ -1,39 +1,48 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase/client";
-import { User } from "@supabase/supabase-js";
+import { usePathname } from "next/navigation";
 import ProfileDropdown from "@/components/ProfileDropdown";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
-  const [user, setUser] = useState<User | null>(null);
-  const supabase = createClient();
+  const { user, loading } = useAuth();
+  const pathname = usePathname();
 
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data.user);
-    };
+  const renderNavLinks = () => {
+    if (loading) {
+      return <div className="animate-pulse w-8 h-8 bg-gray-300 rounded-full"></div>;
+    }
 
-    getUser();
+    if (user) {
+      return <ProfileDropdown user={user} />;
+    }
 
-    // Listen for auth state changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === "SIGNED_IN" && session) {
-        setUser(session.user);
-      } else if (event === "SIGNED_OUT") {
-        setUser(null);
-      }
-    });
+    if (pathname === "/") {
+      return (
+        <div className="hidden md:flex space-x-4 items-center">
+          <Link href="/chatbot" className="text-white">
+            Chatbot
+          </Link>
+          <Link href="/login" className="text-white">
+            Login
+          </Link>
+          <Link href="/register" className="text-white">
+            Register
+          </Link>
+        </div>
+      );
+    }
 
-    return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+    if (pathname === "/login" || pathname === "/register") {
+      return null;
+    }
+
+    return null;
+  };
 
   return (
-    <nav className="bg-transparent text-white p-4 absolute top-0 left-0 w-full">
+    <nav className="bg-transparent text-white p-4 absolute top-0 left-0 w-full z-50">
       <div className="container mx-auto flex justify-between items-center">
         <Link
           href="/"
@@ -55,8 +64,8 @@ const Navbar = () => {
           </svg>
           <span>anxiety</span>
         </Link>
-        <div className="hidden md:flex space-x-4">
-          {user && <ProfileDropdown user={user} />}
+        <div className="hidden md:flex space-x-4 items-center">
+          {renderNavLinks()}
         </div>
         <div className="md:hidden">
           {/* Mobile Menu Button */}

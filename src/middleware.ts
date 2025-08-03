@@ -1,10 +1,26 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+  ],
+};
+
+const publicRoutes = ["/", "/login", "/register", "/chatbot"];
+
+export async function middleware(req: NextRequest) {
   let response = NextResponse.next({
     request: {
-      headers: request.headers,
+      headers: req.headers,
     },
   });
 
@@ -14,17 +30,17 @@ export async function middleware(request: NextRequest) {
     {
       cookies: {
         get(name: string) {
-          return request.cookies.get(name)?.value;
+          return req.cookies.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
+          req.cookies.set({
             name,
             value,
             ...options,
           });
           response = NextResponse.next({
             request: {
-              headers: request.headers,
+              headers: req.headers,
             },
           });
           response.cookies.set({
@@ -34,14 +50,14 @@ export async function middleware(request: NextRequest) {
           });
         },
         remove(name: string, options: CookieOptions) {
-          request.cookies.set({
+          req.cookies.set({
             name,
             value: "",
             ...options,
           });
           response = NextResponse.next({
             request: {
-              headers: request.headers,
+              headers: req.headers,
             },
           });
           response.cookies.set({
@@ -51,22 +67,24 @@ export async function middleware(request: NextRequest) {
           });
         },
       },
-    },
+    }
   );
 
-  await supabase.auth.getUser();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const { pathname } = req.nextUrl;
+
+  // Redirect unauthenticated users to login for protected routes
+  if (!session && !publicRoutes.includes(pathname)) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // Redirect authenticated users away from auth pages
+  if (session && (pathname === "/login" || pathname === "/register")) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
 
   return response;
 }
-
-export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!_next/static|_next/image|favicon.ico).*)",
-  ],
-};

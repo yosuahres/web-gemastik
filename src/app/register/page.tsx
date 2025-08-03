@@ -10,11 +10,16 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -24,6 +29,8 @@ const RegisterPage = () => {
         },
       },
     });
+
+    setLoading(false);
 
     if (error) {
       setError(error.message);
@@ -43,8 +50,8 @@ const RegisterPage = () => {
         <h2 className="text-2xl font-bold text-center text-white">
           Create an account
         </h2>
-        {error && <p className="text-red-500">{error}</p>}
-        {success && <p className="text-green-500">{success}</p>}
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        {success && <p className="text-green-500 text-center">{success}</p>}
         <form onSubmit={handleSignUp} className="space-y-6">
           <div>
             <label
@@ -62,6 +69,7 @@ const RegisterPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              disabled={loading}
             />
           </div>
           <div>
@@ -80,6 +88,7 @@ const RegisterPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              disabled={loading}
             />
           </div>
           <div>
@@ -98,14 +107,16 @@ const RegisterPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              disabled={loading}
             />
           </div>
           <div>
             <button
               type="submit"
-              className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              disabled={loading}
+              className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign up
+              {loading ? "Creating account..." : "Sign up"}
             </button>
           </div>
         </form>
