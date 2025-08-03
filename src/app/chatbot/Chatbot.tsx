@@ -73,7 +73,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel }) => {
   };
 
   return (
-    <div className="flex flex-col h-full max-w-5xl mx-auto">
+    <div className="flex flex-col h-full max-w-5xl mx-auto bg-black text-white">
       <div
         ref={chatboxRef}
         className="flex-1 p-4 overflow-y-auto flex flex-col w-full no-scrollbar"
@@ -90,11 +90,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ anxietyLevel }) => {
             onChange={(e) => setUserInput(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
             placeholder="Your Message..."
-            className="w-full p-4 pr-16 rounded-full bg-white text-black"
+            className="w-full p-4 pr-16 rounded-full bg-gray-800 text-white border border-gray-600 focus:border-orange-400 focus:outline-none"
           />
           <button
             onClick={handleSendMessage}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-orange-400 text-white rounded-full flex items-center justify-center"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-orange-400 hover:bg-orange-500 text-white rounded-full flex items-center justify-center transition-colors"
           >
             <svg
               className="w-6 h-6"

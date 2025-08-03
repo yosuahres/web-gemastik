@@ -1,12 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Chatbot, { AnxietyLevel } from "../chatbot/Chatbot";
+import ChatbotWrapper from "@/components/ChatbotWrapper";
 import { useAuth } from "@/contexts/AuthContext";
 
 const DashboardPage = () => {
   const { user, loading } = useAuth();
-  const [anxietyLevel, _setAnxietyLevel] = useState<AnxietyLevel>("LOW");
 
   if (loading) {
     return (
@@ -25,9 +23,9 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="pt-16 flex-1 overflow-y-auto">
-        <Chatbot anxietyLevel={anxietyLevel} />
+    <div className="flex flex-col h-screen bg-black">
+      <div className="pt-16 flex-1 overflow-hidden">
+        <ChatbotWrapper showHeader={true} defaultAnxietyLevel="LOW" />
       </div>
     </div>
   );
