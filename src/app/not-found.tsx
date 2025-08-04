@@ -5,11 +5,14 @@ import Typography from "@/components/Typography";
 const NotFoundPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen text-center">
-      <NextImage
-        src="/images/NotFound.png"
-        alt="Not Found"
-        className="w-1/2 md:w-1/3 lg:w-1/4 h-auto"
-      />
+      <div className="w-1/2 md:w-1/3 lg:w-1/4 h-auto relative">
+        <NextImage
+          src="/images/NotFound.png"
+          alt="Not Found"
+          className="object-contain"
+          fill
+        />
+      </div>
       <Typography variant="h2" className="mt-8">
         Page Not Found
       </Typography>

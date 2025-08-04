@@ -5,9 +5,8 @@ const NextImage = ({ src, alt, className, ...props }: ImageProps) => {
     <Image
       src={src}
       alt={alt}
-      fill
-      style={{ objectFit: "cover" }}
       className={className}
+      unoptimized
       {...props}
     />
   );

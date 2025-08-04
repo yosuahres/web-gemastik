@@ -5,11 +5,14 @@ import Typography from "@/components/Typography";
 const LandingPage = () => {
   return (
     <div className="relative h-screen">
-      <NextImage
-        src="/images/backgroundlanding.jpeg"
-        alt="background"
-        className="absolute inset-0 w-full h-full"
-      />
+        <NextImage
+          src="/images/background3.png"
+          alt="background"
+          width={900}
+          height={593}
+          className="absolute inset-0 w-full h-full object-cover -z-10"
+          priority
+        />
       <div className="relative z-20 flex flex-col items-start justify-center h-full text-white p-8 md:p-16">
         <Typography variant="h1" className="mb-4">
           Stay Healthy
