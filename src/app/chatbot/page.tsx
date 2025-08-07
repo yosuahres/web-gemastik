@@ -16,9 +16,9 @@ const ChatbotPage = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-black text-white">
+    <div className="flex flex-col h-screen bg-black text-white pt-16">
       {/* Header */}
-      <div className="pt-16 px-4 py-4 border-b border-gray-800">
+      <div className="px-4 py-4 border-b border-gray-800">
         <div className="max-w-5xl mx-auto flex justify-between items-center">
           {/* <div>
             <h1 className="text-2xl font-bold">Anxiety Support Chatbot</h1>

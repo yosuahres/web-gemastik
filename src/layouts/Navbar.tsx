@@ -4,10 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ProfileDropdown from "@/components/ProfileDropdown";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSidebar } from "@/layouts/Layout";
 
 const Navbar = () => {
   const { user, loading } = useAuth();
   const pathname = usePathname();
+  const { isOpen } = useSidebar();
 
   const renderNavLinks = () => {
     if (loading) {
@@ -15,15 +17,25 @@ const Navbar = () => {
     }
 
     if (user) {
-      return <ProfileDropdown user={user} />;
+      return (
+        <div className="hidden md:flex space-x-4 items-center">
+          {/* <Link href="/dashboard" className="text-white hover:text-gray-300 transition-colors">
+            Dashboard
+          </Link> */}
+          {/* <Link 
+            href="/chatbot" 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200 font-medium"
+          >
+            Chatbot
+          </Link> */}
+          <ProfileDropdown user={user} />
+        </div>
+      );
     }
 
     if (pathname === "/") {
       return (
         <div className="hidden md:flex space-x-4 items-center">
-          <Link href="/chatbot" className="text-white">
-            Chatbot
-          </Link>
           <Link href="/login" className="text-white">
             Login
           </Link>
@@ -42,10 +54,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-transparent text-white p-4 absolute top-0 left-0 w-full z-50">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className={`text-white p-4 fixed top-0 left-0 w-full z-50 ${
+      pathname.startsWith('/dashboard') || pathname.startsWith('/chatbot') ? 'bg-gray-900 shadow-lg' : 'bg-transparent'
+    }`}>
+      <div className={`container mx-auto flex justify-between items-center transition-all duration-300 ${
+        user && (pathname.startsWith('/dashboard') || pathname.startsWith('/chatbot')) && !isOpen ? 'ml-16' : ''
+      }`}>
         <Link
-          href="/"
+          href={user ? "/dashboard" : "/"}
           className="flex items-center space-x-2 text-2xl font-bold"
         >
           <svg
@@ -62,7 +78,7 @@ const Navbar = () => {
               d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
             ></path>
           </svg>
-          <span>anxiety</span>
+          <span>BotaniQ</span>
         </Link>
         <div className="hidden md:flex space-x-4 items-center">
           {renderNavLinks()}
