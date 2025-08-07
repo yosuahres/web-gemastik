@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { getSiteUrl } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
@@ -24,6 +25,7 @@ const RegisterPage = () => {
       email,
       password,
       options: {
+        emailRedirectTo: getSiteUrl(),
         data: {
           username,
         },
