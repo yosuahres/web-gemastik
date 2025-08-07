@@ -3,7 +3,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import Layout from "@/layouts/Layout";
-import Providers from "./providers";
+import { Providers } from "@/app/providers";
 
 const geistSans = GeistSans;
 const geistMono = GeistMono;

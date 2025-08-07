@@ -3,16 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { useSidebar } from "@/layouts/Layout";
+import { useUI } from "@/contexts/UIContext";
 
-interface DashboardSidebarProps {
-  isOpen: boolean;
-}
-
-const DashboardSidebar = ({ isOpen }: DashboardSidebarProps) => {
+const DashboardSidebar = () => {
   const pathname = usePathname();
   const { user } = useAuth();
-  const { toggleSidebar } = useSidebar();
+  const { isSidebarOpen, toggleSidebar } = useUI();
 
   const sidebarItems = [
     {
@@ -84,14 +80,14 @@ const DashboardSidebar = ({ isOpen }: DashboardSidebarProps) => {
       {/* Sidebar */}
       <div 
         className={`bg-white shadow-lg h-screen fixed left-0 top-0 bottom-0 z-50 transition-all duration-300 ease-in-out ${
-          isOpen ? 'w-64' : 'w-16'
+          isSidebarOpen ? 'w-64' : 'w-16'
         }`}
       >
-        <div className={`p-3 transition-all duration-300 ${isOpen ? 'px-6' : 'px-3'} pt-6`}>
+        <div className={`p-3 transition-all duration-300 ${isSidebarOpen ? 'px-6' : 'px-3'} pt-6`}>
         
         {/* Toggle Button */}
-        <div className={`flex items-center justify-between mb-6 ${!isOpen ? 'justify-center' : ''}`}>
-          {isOpen && (
+        <div className={`flex items-center justify-between mb-6 ${!isSidebarOpen ? 'justify-center' : ''}`}>
+          {isSidebarOpen && (
             <div className="flex items-center space-x-2">
               <h2 className="text-xl font-bold text-gray-800">{getPageTitle()}</h2>
             </div>
@@ -99,10 +95,10 @@ const DashboardSidebar = ({ isOpen }: DashboardSidebarProps) => {
           <button
             onClick={toggleSidebar}
             className="p-2 text-gray-600 hover:bg-gray-100 rounded-md transition-colors duration-200"
-            aria-label={isOpen ? "Close sidebar" : "Open sidebar"}
+            aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isOpen ? (
+              {isSidebarOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
               ) : (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -112,7 +108,7 @@ const DashboardSidebar = ({ isOpen }: DashboardSidebarProps) => {
         </div>
 
         {/* Welcome Message */}
-        {isOpen && (
+        {isSidebarOpen && (
           <div className="mb-8">
             <p className="text-sm text-gray-600">Welcome back, {user?.email?.split('@')[0]}</p>
           </div>
@@ -126,23 +122,23 @@ const DashboardSidebar = ({ isOpen }: DashboardSidebarProps) => {
                 key={item.name}
                 href={item.href}
                 className={`flex items-center rounded-lg transition-all duration-200 group relative ${
-                  isOpen ? 'space-x-3 px-4 py-3' : 'justify-center p-3'
+                  isSidebarOpen ? 'space-x-3 px-4 py-3' : 'justify-center p-3'
                 } ${
                   isActive
                     ? "bg-blue-100 text-blue-700"
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-800"
                 }`}
-                title={!isOpen ? item.name : undefined}
+                title={!isSidebarOpen ? item.name : undefined}
               >
                 <span className={`${isActive ? "text-blue-700" : "text-gray-400"} transition-colors duration-200`}>
                   {item.icon}
                 </span>
-                {isOpen && (
+                {isSidebarOpen && (
                   <span className="font-medium transition-opacity duration-200">{item.name}</span>
                 )}
                 
                 {/* Tooltip for collapsed state */}
-                {!isOpen && (
+                {!isSidebarOpen && (
                   <div className="absolute left-16 bg-gray-800 text-white text-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
                     {item.name}
                   </div>

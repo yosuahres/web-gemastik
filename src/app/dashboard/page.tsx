@@ -3,9 +3,17 @@
 import { useAuth } from "@/contexts/AuthContext";
 import SoilDataTable from "@/components/dashboard/SoilDataTable";
 import PlantDataTable from "@/components/dashboard/PlantDataTable";
+import SoilDataChart from "@/components/dashboard/SoilDataChart";
+import { useRouter } from "next/navigation";
 
 const DashboardPage = () => {
   const { user, loading } = useAuth();
+  const router = useRouter();
+
+  const handleGetRecommendation = (data: any) => {
+    const query = new URLSearchParams(data).toString();
+    router.push(`/chatbot?${query}`);
+  };
 
   if (loading) {
     return (
@@ -31,8 +39,9 @@ const DashboardPage = () => {
           <p className="text-gray-600 mt-2">Monitor your agricultural data and insights</p>
         </div>
         <div className="flex flex-col gap-8">
-          <SoilDataTable />
-          <PlantDataTable />
+          <SoilDataChart />
+          <SoilDataTable onGetRecommendation={handleGetRecommendation} />
+          <PlantDataTable onGetRecommendation={handleGetRecommendation} />
         </div>
       </div>
     </div>

@@ -2,10 +2,34 @@
 
 import ChatbotWrapper from "@/components/ChatbotWrapper";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUI } from "@/contexts/UIContext";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const ChatbotPage = () => {
   const { user, loading } = useAuth();
+  const searchParams = useSearchParams();
+  const { setSidebarOpen } = useUI();
+
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [setSidebarOpen]);
+
+  const getInitialPrompt = () => {
+    const disease_status = searchParams.get("disease_status");
+    const ph = searchParams.get("ph");
+
+    if (disease_status) {
+      return `My plant has ${disease_status}. What should I do?`;
+    }
+    if (ph) {
+      return `My soil has a pH of ${ph}. What does this mean and what should I do?`;
+    }
+    return undefined;
+  };
+
+  const initialPrompt = getInitialPrompt();
 
   if (loading) {
     return (
@@ -52,10 +76,9 @@ const ChatbotPage = () => {
       {/* Chatbot */}
       <div className="flex-1 overflow-hidden">
         <div className="max-w-5xl mx-auto h-full">
-          <ChatbotWrapper 
-            showHeader={false} 
-            defaultAnxietyLevel="LOW"
+          <ChatbotWrapper
             className="h-full"
+            initialPrompt={initialPrompt}
           />
         </div>
       </div>

@@ -4,12 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ProfileDropdown from "@/components/ProfileDropdown";
 import { useAuth } from "@/contexts/AuthContext";
-import { useSidebar } from "@/layouts/Layout";
+import { useUI } from "@/contexts/UIContext";
 
 const Navbar = () => {
   const { user, loading } = useAuth();
   const pathname = usePathname();
-  const { isOpen } = useSidebar();
+  const { isSidebarOpen } = useUI();
 
   const renderNavLinks = () => {
     if (loading) {
@@ -58,7 +58,7 @@ const Navbar = () => {
       pathname.startsWith('/dashboard') || pathname.startsWith('/chatbot') ? 'bg-gray-900 shadow-lg' : 'bg-transparent'
     }`}>
       <div className={`container mx-auto flex justify-between items-center transition-all duration-300 ${
-        user && (pathname.startsWith('/dashboard') || pathname.startsWith('/chatbot')) && !isOpen ? 'ml-16' : ''
+        user && (pathname.startsWith('/dashboard') || pathname.startsWith('/chatbot')) && !isSidebarOpen ? 'ml-16' : ''
       }`}>
         <Link
           href={user ? "/dashboard" : "/"}
