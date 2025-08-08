@@ -9,6 +9,7 @@ export interface SoilData {
 export interface PlantData {
   id: number;
   timestamp: string;
+  type: "Padi" | "Jagung" | "Teh";
   disease_status: string;
   image: string;
 }

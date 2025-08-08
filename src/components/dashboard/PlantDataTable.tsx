@@ -8,30 +8,35 @@ const plantData: PlantData[] = [
   {
     id: 1,
     timestamp: "2024-08-07 10:00:00",
+    type: "Padi",
     disease_status: "Healthy",
     image: "/images/plant1.jpg",
   },
   {
     id: 2,
     timestamp: "2024-08-07 10:05:00",
+    type: "Jagung",
     disease_status: "Early Blight",
     image: "/images/plant2.jpg",
   },
   {
     id: 3,
     timestamp: "2024-08-07 10:10:00",
+    type: "Teh",
     disease_status: "Healthy",
     image: "/images/plant3.jpg",
   },
   {
     id: 4,
     timestamp: "2024-08-07 10:15:00",
+    type: "Padi",
     disease_status: "Late Blight",
     image: "/images/plant4.jpg",
   },
   {
     id: 5,
     timestamp: "2024-08-07 10:20:00",
+    type: "Jagung",
     disease_status: "Healthy",
     image: "/images/plant5.jpg",
   },
@@ -60,6 +65,9 @@ const PlantDataTable: FC<PlantDataTableProps> = ({ onGetRecommendation }) => {
                 Timestamp
               </th>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Type
+              </th>
+              <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
               <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -79,6 +87,9 @@ const PlantDataTable: FC<PlantDataTableProps> = ({ onGetRecommendation }) => {
                 <td className="py-4 px-6 text-sm text-gray-900">{plant.id}</td>
                 <td className="py-4 px-6 text-sm text-gray-900">
                   {plant.timestamp}
+                </td>
+                <td className="py-4 px-6 text-sm text-gray-900">
+                  {plant.type}
                 </td>
                 <td className="py-4 px-6 text-sm">
                   <span
