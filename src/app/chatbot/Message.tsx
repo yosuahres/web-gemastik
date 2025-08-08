@@ -14,8 +14,8 @@ const Message: React.FC<MessageProps> = ({ message }) => {
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} w-full`}>
       <div
         className={`max-w-[80%] p-4 rounded-xl mb-4 ${
-          isUser 
-            ? "bg-blue-600 text-white" 
+          isUser
+            ? "bg-blue-600 text-white"
             : "bg-gray-800 text-gray-100 border border-gray-700"
         }`}
       >

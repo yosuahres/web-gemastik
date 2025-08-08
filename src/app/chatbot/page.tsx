@@ -61,13 +61,22 @@ const ChatbotPage = () => {
         <div className="bg-blue-900/20 border border-blue-800 px-4 py-3 mx-4 mt-4 rounded-lg">
           <div className="max-w-5xl mx-auto">
             <p className="text-blue-200 text-sm">
-              💡 You're using the chatbot as a guest. 
-              <Link href="/register" className="text-blue-400 hover:underline ml-1">
+              💡 You're using the chatbot as a guest.
+              <Link
+                href="/register"
+                className="text-blue-400 hover:underline ml-1"
+              >
                 Create an account
-              </Link> or 
-              <Link href="/login" className="text-blue-400 hover:underline ml-1">
+              </Link>{" "}
+              or
+              <Link
+                href="/login"
+                className="text-blue-400 hover:underline ml-1"
+              >
                 sign in
-              </Link> to save your conversations and access personalized anxiety level settings.
+              </Link>{" "}
+              to save your conversations and access personalized anxiety level
+              settings.
             </p>
           </div>
         </div>
@@ -76,10 +85,7 @@ const ChatbotPage = () => {
       {/* Chatbot */}
       <div className="flex-1 overflow-hidden">
         <div className="max-w-5xl mx-auto h-full">
-          <ChatbotWrapper
-            className="h-full"
-            initialPrompt={initialPrompt}
-          />
+          <ChatbotWrapper className="h-full" initialPrompt={initialPrompt} />
         </div>
       </div>
     </div>

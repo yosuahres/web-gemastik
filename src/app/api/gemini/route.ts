@@ -4,7 +4,7 @@ import {
   PROMPT_MEDIUM_ANXIETY,
   PROMPT_HIGH_ANXIETY,
 } from "../../../lib/prompts";
-import { AnxietyLevel } from "../../chatbot/Chatbot";
+import { AnxietyLevel } from "@/types/api";
 
 export async function POST(req: Request) {
   const {

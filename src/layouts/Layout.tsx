@@ -12,13 +12,23 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isSidebarOpen } = useUI();
 
   // Show sidebar on all pages when user is logged in, except login/register pages
-  const showSidebar = user && pathname !== '/login' && pathname !== '/register' && pathname !== '/';
+  const showSidebar =
+    user &&
+    pathname !== "/login" &&
+    pathname !== "/register" &&
+    pathname !== "/";
 
   return (
     <div>
       <Navbar />
       {showSidebar && <DashboardSidebar />}
-      <main className={showSidebar ? `transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-16'}` : ''}>
+      <main
+        className={
+          showSidebar
+            ? `transition-all duration-300 ${isSidebarOpen ? "ml-64" : "ml-16"}`
+            : ""
+        }
+      >
         {children}
       </main>
     </div>

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Message from "./Message";
+import { AnxietyLevel } from "@/types/api";
 
 interface ChatMessage {
   text: string;
@@ -44,7 +45,12 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialPrompt }) => {
     if (initialPrompt) {
       getInitialRecommendation(initialPrompt);
     } else {
-      setMessages([{ text: "Hello! How can I help you with your farm today?", sender: "bot" }]);
+      setMessages([
+        {
+          text: "Hello! How can I help you with your farm today?",
+          sender: "bot",
+        },
+      ]);
     }
   }, [initialPrompt]);
 

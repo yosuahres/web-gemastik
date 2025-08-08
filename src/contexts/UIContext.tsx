@@ -18,7 +18,9 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <UIContext.Provider value={{ isSidebarOpen, toggleSidebar, setSidebarOpen }}>
+    <UIContext.Provider
+      value={{ isSidebarOpen, toggleSidebar, setSidebarOpen }}
+    >
       {children}
     </UIContext.Provider>
   );

@@ -13,7 +13,9 @@ const Navbar = () => {
 
   const renderNavLinks = () => {
     if (loading) {
-      return <div className="animate-pulse w-8 h-8 bg-gray-300 rounded-full"></div>;
+      return (
+        <div className="animate-pulse w-8 h-8 bg-gray-300 rounded-full"></div>
+      );
     }
 
     if (user) {
@@ -54,12 +56,23 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`text-white p-4 fixed top-0 left-0 w-full z-50 ${
-      pathname.startsWith('/dashboard') || pathname.startsWith('/chatbot') ? 'bg-gray-900 shadow-lg' : 'bg-transparent'
-    }`}>
-      <div className={`container mx-auto flex justify-between items-center transition-all duration-300 ${
-        user && (pathname.startsWith('/dashboard') || pathname.startsWith('/chatbot')) && !isSidebarOpen ? 'ml-16' : ''
-      }`}>
+    <nav
+      className={`text-white p-4 fixed top-0 left-0 w-full z-50 ${
+        pathname.startsWith("/dashboard") || pathname.startsWith("/chatbot")
+          ? "bg-gray-900 shadow-lg"
+          : "bg-transparent"
+      }`}
+    >
+      <div
+        className={`container mx-auto flex justify-between items-center transition-all duration-300 ${
+          user &&
+          (pathname.startsWith("/dashboard") ||
+            pathname.startsWith("/chatbot")) &&
+          !isSidebarOpen
+            ? "ml-16"
+            : ""
+        }`}
+      >
         <Link
           href={user ? "/dashboard" : "/"}
           className="flex items-center space-x-2 text-2xl font-bold"
